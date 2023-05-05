@@ -1,10 +1,13 @@
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JButton;
 
 public class Game {
@@ -13,10 +16,17 @@ public class Game {
  Container con; // Creates Container
  JPanel titleNamePanel; // Creates panel for title text
  JPanel startButtonPanel; // Creates panel for start button
+ JPanel mainTextPanel; // Creates panel to display main text in game
  JLabel titleNameLabel; // Creates label for title text
  JButton startButton; // Creates button for start button
+ JTextArea mainTextArea; 
+
+ TitleScreenHandler tsHandler = new TitleScreenHandler();
+
  Font titleFont = new Font("Chiller", Font.PLAIN, 70); // Creates text font
 Font startFont = new Font("Chiller", Font.BOLD, 20); // Creates font for start button
+Font basicFont = new Font("Times New Roman", Font.PLAIN, 20); // Create basic font
+
     public static void main(String[] args){
 
        new Game();
@@ -47,7 +57,8 @@ Font startFont = new Font("Chiller", Font.BOLD, 20); // Creates font for start b
         startButton = new JButton("START GAME"); // Set button
         startButton.setBackground(Color.BLACK); // Button colour
         startButton.setForeground(Color.WHITE); // Text colour
-        startButton.setFont(startFont);
+        startButton.setFont(startFont); // Font
+        startButton.addActionListener(tsHandler); // Add Functionality
 
 
         titleNamePanel.add(titleNameLabel); // Add JLabel text to JPanel
@@ -55,5 +66,37 @@ Font startFont = new Font("Chiller", Font.BOLD, 20); // Creates font for start b
 
         con.add(titleNamePanel);
         con.add(startButtonPanel);    
+    }
+
+    public void createGameScreen(){
+
+        titleNameLabel.setVisible(false); // set previous panels not visable
+        startButtonPanel.setVisible(false);
+
+        mainTextPanel = new JPanel(); // Create panel
+        mainTextPanel.setBounds(100, 100, 600, 250);
+        mainTextPanel.setBackground(Color.BLUE);
+        con.add(mainTextPanel);
+
+        mainTextArea = new JTextArea("This is the main text area"); // Create text area
+        mainTextArea.setBounds(100, 100, 600, 250);
+        mainTextArea.setBackground(Color.GREEN);
+        mainTextArea.setForeground(Color.RED);
+        mainTextArea.setFont(basicFont);
+        mainTextArea.setLineWrap(true); // set basic text to wrap if too long
+        mainTextPanel.add(mainTextArea); // Add text panel to text area
+        
+
+
+    }
+
+    public class TitleScreenHandler implements ActionListener{
+
+        public void actionPerformed(ActionEvent event){
+
+            createGameScreen();
+
+        }
+
     }
 }
