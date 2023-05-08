@@ -30,12 +30,14 @@ public class Game {
  JTextArea mainTextArea; 
  int playerHp;
  String weapon;
+ String position;
 
  TitleScreenHandler tsHandler = new TitleScreenHandler();
+ ChoiceHandler choiceHandler = new ChoiceHandler();
 
  Font titleFont = new Font("Chiller", Font.PLAIN, 70); // Creates text font
 Font startFont = new Font("Chiller", Font.BOLD, 20); // Creates font for start button
-Font basicFont = new Font("Times New Roman", Font.PLAIN, 20); // Create basic font
+Font basicFont = new Font("Times New Roman", Font.PLAIN, 28); // Create basic font
 
     public static void main(String[] args){
 
@@ -113,6 +115,8 @@ Font basicFont = new Font("Times New Roman", Font.PLAIN, 20); // Create basic fo
         choice1.setForeground(Color.WHITE);
         choice1.setFont(basicFont);
         choice1.setFocusPainted(false);
+        choice1.addActionListener(choiceHandler);
+        choice1.setActionCommand("c1");
         choiceButtonPanel.add(choice1);
 
         choice2 = new Jbutton("Choice 2");
@@ -120,6 +124,8 @@ Font basicFont = new Font("Times New Roman", Font.PLAIN, 20); // Create basic fo
         choice2.setForeground(Color.WHITE);
         choice2.setFont(basicFont);
         choice2.setFocusPainted(false);
+        choice2.addActionListener(choiceHandler);
+        choice2.setActionCommand("c2");
         choiceButtonPanel.add(choice2);
 
         choice3 = new Jbutton("Choice 3");
@@ -127,6 +133,8 @@ Font basicFont = new Font("Times New Roman", Font.PLAIN, 20); // Create basic fo
         choice3.setForeground(Color.WHITE);
         choice3.setFont(basicFont);
         choice3.setFocusPainted(false);
+        choice3.addActionListener(choiceHandler);
+        choice3.setActionCommand("c3");
         choiceButtonPanel.add(choice3);
 
         choice4 = new Jbutton("Choice 4");
@@ -134,6 +142,8 @@ Font basicFont = new Font("Times New Roman", Font.PLAIN, 20); // Create basic fo
         choice4.setForeground(Color.WHITE);
         choice4.setFont(basicFont);
         choice4.setFocusPainted(false);
+        choice4.addActionListener(choiceHandler);
+        choice4.setActionCommand("c4");
         choiceButtonPanel.add(choice4);
 
         // Adds panel for player info
@@ -182,13 +192,28 @@ Font basicFont = new Font("Times New Roman", Font.PLAIN, 20); // Create basic fo
 
         public void parkGate(){
 
+            position = "parkGate";
             // Add /n for linebreak
             mainTextArea.setText("You are at the entrance to the park. A zombie clown stands blocking the gate. What do you do?");
+
+            choice1.setText("Talk to him.");
+            choice2.setText("Attack him!");
+            choice3.setText("Leave.");
+            choice4.setText("");
             
+        }
+
+        public void talkClown(){
+            position = "talkClown";
+            mainTextArea.setText("Clown: RAHHHH UGHHHH (He's a ZOMBIE clown dummy)");
+            choice1.setText("<");
+            choice2.setText("");
+            choice3.setText("");
+            choice4.setText("");
 
         }
 
-
+    // Handles start button press
     public class TitleScreenHandler implements ActionListener{
 
         public void actionPerformed(ActionEvent event){
@@ -196,6 +221,32 @@ Font basicFont = new Font("Times New Roman", Font.PLAIN, 20); // Create basic fo
             createGameScreen();
 
         }
-
     }
+    
+    // Handles Choice button presses
+    public class ChoiceHandler implements ActionListener{
+
+        public void actionPerformed(ActionEvent event){
+
+        String yourChoice = event.getActionCommand();
+
+        // Essentialy like if statements
+        switch(position){
+            case "parkGate";
+            switch(yourChoice){
+                case "c1"; talkClown(); break;
+                case "c2"; break;
+                case "c3"; break;
+                case "c4"; break;
+            }
+            break;
+            case "talkClown";
+            switch(yourChoice){
+                case "c1"; parkGate(); break;
+            }
+        }
+
+        }
+    }
+
 }
