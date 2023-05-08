@@ -3,6 +3,7 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.GridLayout
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,9 +18,18 @@ public class Game {
  JPanel titleNamePanel; // Creates panel for title text
  JPanel startButtonPanel; // Creates panel for start button
  JPanel mainTextPanel; // Creates panel to display main text in game
+ JPanel choiceButtonPanel; // Creates panel for buttons in game
+ JPanel playerPanel; // Creates panel for player data 
  JLabel titleNameLabel; // Creates label for title text
+ JLabel hpLabel; // Creates label for HP text
+ JLabel hpLabelNumber; // Creates label for HP number
+ JLabel weaponLabel; // Creates label for weapon text
+ JLabel weaponLabelName; // Creates label for weapon number
  JButton startButton; // Creates button for start button
+ JButton choice1, choice2, choice3, choice4; // Creates JButton for game buttons
  JTextArea mainTextArea; 
+ int playerHp;
+ String weapon;
 
  TitleScreenHandler tsHandler = new TitleScreenHandler();
 
@@ -59,6 +69,7 @@ Font basicFont = new Font("Times New Roman", Font.PLAIN, 20); // Create basic fo
         startButton.setForeground(Color.WHITE); // Text colour
         startButton.setFont(startFont); // Font
         startButton.addActionListener(tsHandler); // Add Functionality
+        startButton.setFocusPainted(false); // Gets rid of annoying box and text line
 
 
         titleNamePanel.add(titleNameLabel); // Add JLabel text to JPanel
@@ -70,25 +81,113 @@ Font basicFont = new Font("Times New Roman", Font.PLAIN, 20); // Create basic fo
 
     public void createGameScreen(){
 
-        titleNameLabel.setVisible(false); // set previous panels not visable
+        // Set previous panels not visable
+        titleNameLabel.setVisible(false); 
         startButtonPanel.setVisible(false);
 
-        mainTextPanel = new JPanel(); // Create panel
+        //Create Panel for text area
+        mainTextPanel = new JPanel(); 
         mainTextPanel.setBounds(100, 100, 600, 250);
-        mainTextPanel.setBackground(Color.BLUE);
+        mainTextPanel.setBackground(Color.BLACK);
         con.add(mainTextPanel);
-
-        mainTextArea = new JTextArea("This is the main text area"); // Create text area
+        
+        // Create text area
+        mainTextArea = new JTextArea("This is the main text area"); 
         mainTextArea.setBounds(100, 100, 600, 250);
-        mainTextArea.setBackground(Color.GREEN);
-        mainTextArea.setForeground(Color.RED);
+        mainTextArea.setBackground(Color.BLACK);
+        mainTextArea.setForeground(Color.WHITE);
         mainTextArea.setFont(basicFont);
         mainTextArea.setLineWrap(true); // set basic text to wrap if too long
         mainTextPanel.add(mainTextArea); // Add text panel to text area
-        
 
+        // Add panel for buttons
+        choiceButtonPanel = new JPanel();
+        choiceButtonPanel.setBounds(250, 350, 300, 150);
+        choiceButtonPanel.setBackground(Color.RED);
+        choiceButtonPanel.setLayout(new GridLayout(4, 1));
+        con.add(choiceButtonPanel);
+
+        // Add game buttons
+        choice1 = new Jbutton("Choice 1");
+        choice1.setBackground(Color.BLACK);
+        choice1.setForeground(Color.WHITE);
+        choice1.setFont(basicFont);
+        choice1.setFocusPainted(false);
+        choiceButtonPanel.add(choice1);
+
+        choice2 = new Jbutton("Choice 2");
+        choice2.setBackground(Color.BLACK);
+        choice2.setForeground(Color.WHITE);
+        choice2.setFont(basicFont);
+        choice2.setFocusPainted(false);
+        choiceButtonPanel.add(choice2);
+
+        choice3 = new Jbutton("Choice 3");
+        choice3.setBackground(Color.BLACK);
+        choice3.setForeground(Color.WHITE);
+        choice3.setFont(basicFont);
+        choice3.setFocusPainted(false);
+        choiceButtonPanel.add(choice3);
+
+        choice4 = new Jbutton("Choice 4");
+        choice4.setBackground(Color.BLACK);
+        choice4.setForeground(Color.WHITE);
+        choice4.setFont(basicFont);
+        choice4.setFocusPainted(false);
+        choiceButtonPanel.add(choice4);
+
+        // Adds panel for player info
+        playerPanel = newJPanel();
+        playerPanel.setBounds(100, 15, 600, 50);
+        playerPanel.setBackground(Color.BLACK);
+        playerPanel.setLayout(new GridLayout(1,4));
+        con.add(playerPanel);
+
+        // Add labels for player info
+        hpLabel = newJLabel("HP:");
+        hpLabel.setFont(basicFont);
+        hpLabel.setForeground(Color.WHITE);
+        playerPanel.add(hpLabel);
+        
+        hpLabelNumber = newJLabel();
+        hpLabelNumber.setFont(basicFont);
+        hpLabelNumber.setForeground(Color.WHITE);
+        playerPanel.add(hpLabelNumber);
+
+        weaponLabel = newJLabel("Weapon:");
+        weaponLabel.setFont(basicFont);
+        weaponLabel.setForeground(Color.White);
+        playerPanel.add(weaponLabel);
+
+        weaponLabelName = newJLabel();
+        weaponLabelName.setFont(basicFont);
+        weaponLabelName.setForeground(Color.WHITE);
+        playerPanel.add(weaponLabelName);
+
+        playerSetup;
 
     }
+
+        public void playerSetup(){
+
+        // Set player info
+        playerHp = 15;
+        weapon = "Knife";
+        weaponLabelName.setText(weapon);
+        hpLabel.setText(" " + playerHp);
+
+        parkGate();
+
+        }
+
+        public void parkGate(){
+
+            // Add /n for linebreak
+            mainTextArea.setText("You are at the entrance to the park. A zombie clown stands blocking the gate. What do you do?");
+            
+
+        }
+
 
     public class TitleScreenHandler implements ActionListener{
 
