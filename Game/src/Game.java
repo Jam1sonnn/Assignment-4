@@ -29,6 +29,8 @@ public class Game {
  JButton choice1, choice2, choice3, choice4; // Creates JButton for game buttons
  JTextArea mainTextArea; 
  int playerHp;
+ int monsterHP;
+ int silverRing;
  String weapon;
  String position;
 
@@ -182,6 +184,7 @@ Font basicFont = new Font("Times New Roman", Font.PLAIN, 28); // Create basic fo
 
         // Set player info
         playerHp = 15;
+        monsterHP = 20;
         weapon = "Knife";
         weaponLabelName.setText(weapon);
         hpLabel.setText(" " + playerHp);
@@ -210,8 +213,167 @@ Font basicFont = new Font("Times New Roman", Font.PLAIN, 28); // Create basic fo
             choice2.setText("");
             choice3.setText("");
             choice4.setText("");
+        }
+
+        public void attackClown(){
+            position = "attackGuard";
+            mainTextArea.setText("Clown: DUHH UGHH RAHH. He fought back and hit you! (You Recieve 3 dmg)");
+            playerHp = playerHp -3;
+            hpLabelNumber.setText("playerHp");
+            choice1.setText(">");
+            choice2.setText("");
+            choice3.setText("");
+            choice4.setText("");
+        }
+
+        public void crossRoad(){
+            position = "crossRoad";
+            mainTextArea.setText("You are at a crossroad. If you go south, you will go back to the town");
+            choice1.setText("Go North");
+            choice2.setText("Go East");
+            choice3.setText("Go South");
+            choice4.setText("Go West");
+        }
+
+        public void north(){
+            position = "north";
+            mainTextArea.setText("There is A game booth. Do you play?")
+            choice1.setText("Yes");
+            choice2.setText("No");
+            choice3.setText("");
+            choice4.setText("");
+        }
+
+        public void postGame(){
+            position "postGame";
+            mainTextArea.setText("You won a candy bar! (you ate it and restored 2hp)");
+            playerhP = playerHp + 2;
+            hpLabelNumber.setText("" + playerhP);
+            choice1.setText("Go south");
+            choice2.setText("");
+            choice3.setText("");
+            choice4.setText("");
+        }
+
+        public void east(){
+            position = "east";
+            mainTextArea.setText("You found a storage closet, but it is locked. Attempt to pick it?")
+            choice1.setText("Yes")
+            choice2.setText("No")
+            choice3.setText("");
+            choice4.setText("");
+        }
+
+        public void storageCloset(){
+            position = "storageCloset";
+            mainTextArea.setText("You found a sword! (Added to inventory)")
+            weapon = "Sword";
+            weaponLabelName.setText(weapon);
+            choice1.setText("<")
+            choice2.setText("");
+            choice3.setText("");
+            choice4.setText("");
+        }
+
+        public void west(){
+            position = "west";
+            mainTextArea.setText("You encounter another zombie!")
+            choice1.setText("Fight")
+            choice2.setText("Run");
+            choice3.setText("");
+            choice4.setText("");
+        }
+
+        public void fightZombie(){
+            position = "fightZombie";
+            mainTextArea.setText("Monster HP: " + monsterHP + "What do you do?");
+            choice1.setText("Attack")
+            choice2.setText("Run");
+            choice3.setText("");
+            choice4.setText("");
+        }
+        public void playerAttack(){
+            position = "playerAttack";
+
+            int playerDamage = 0;
+
+            if (weapon.equals("Knife")){
+            playerDamage = new java.util.Random().nextInt(3);
+        }
+            else if (weapon.equals("Sword")){
+                playerDamage = new java.util.Random().nextInt(10);
+            }
+
+            mainTextArea.setText("You attacked the zombie and gave" + playerDamage + " dmg");
+
+            monsterHP = monsterHP - playerDamage;
+
+            choice1.setText(">")
+            choice2.setText("");
+            choice3.setText("");
+            choice4.setText("");
+        }
+        
+        public void monsterAttack(){
+            position = "monsterAttack";
+
+           int monsterDamage = 0;
+
+           monsterDamage = new java.util.Random().nextInt(6);
+
+           mainTextArea.setText("The monster attacked you and gave" + monsterDamage " dmg");
+
+           playerhP = playerHp - monsterDamage;
+           hpLabelNumber.setText("" + playerHp);
+
+           choice1.setText(">")
+           choice2.setText("");
+           choice3.setText("");
+           choice4.setText("");
+        }
+
+        public void winGame(){
+            position = "winGame";
+
+            mainTextArea.setText("You defeated the zombie. The zombie dropped a ring. (You obtained a silver ring)");
+
+            silverRing = 1;
+
+            choice1.setText("Go East");
+            choice2.setText("");
+            choice3.setText("");
+            choice4.setText("");
 
         }
+        
+        public void loseGame(){
+            position = "loseGame";
+            mainTextArea.setText("You are Dead! Game Over.");
+            choice1.setText("")
+            choice2.setText("");
+            choice3.setText("");
+            choice4.setText("");
+            choice1.setVisible(false);
+            choice2.setVisible(false);
+            choice3.setVisible(false);
+            choice4.setVisible(false);
+        }
+
+        public void endGame()[
+            position = "endGame";
+
+            mainTextArea.setText("You have cleared out the cursed Themepark! You will forever be a hero!");
+            choice1.setText("")
+            choice2.setText("");
+            choice3.setText("");
+            choice4.setText("");
+            choice1.setVisible(false);
+            choice2.setVisible(false);
+            choice3.setVisible(false);
+            choice4.setVisible(false);
+        ]
+
+
 
     // Handles start button press
     public class TitleScreenHandler implements ActionListener{
@@ -230,21 +392,105 @@ Font basicFont = new Font("Times New Roman", Font.PLAIN, 28); // Create basic fo
 
         String yourChoice = event.getActionCommand();
 
-        // Essentialy like if statements
+        // switch = Essentialy if statements but not as long
         switch(position){
             case "parkGate";
             switch(yourChoice){
-                case "c1"; talkClown(); break;
-                case "c2"; break;
-                case "c3"; break;
-                case "c4"; break;
+                case "c1";
+                if (silverRing = 1){
+                    endGame();
+                }
+                else{
+                    talkClown();
+                }
+                break;
+                case "c2"; attackClown(); break;
+                case "c3"; crossRoad(); break;
             }
             break;
             case "talkClown";
             switch(yourChoice){
                 case "c1"; parkGate(); break;
             }
-        }
+            break;
+            case "attackClown";
+            switch(yourChoice){
+                case "c1"; parkGate(); break;
+            }
+            break;
+            case "crossRoad";
+            switch(yourChoice){
+                case "c1"; north(); break;
+                case "c2"; east(); break;
+                case "c3"; parkGate(); break;
+                case "c4"; west(); break;        
+            }
+            break;
+            case "north"
+            switch(yourChoice){
+                // Add Game one into c1
+                case "c1"; break;
+                case "c2"; crossRoad(); break;
+            }
+            break;
+            case "postGame";
+            switch(yourChoice){
+                case "c1"; crossRoad(); break;
+            }
+            break;
+            case "east";
+            // Add lockpick 2 onto c1
+            switch(yourChoice){
+                case "c1"; break;
+                case "c2"; crossRoad(); break;
+            }
+            break;
+            case "storageCloset";
+            switch(yourChoice){
+                case "c1"; crossRoads(); break;
+            }
+            break;
+            case "west";
+            switch(yourChoice){
+                case "c1"; fightZombie(); break;
+                case "c2"; crossRoad(); break; 
+            }
+            break;
+            case "fightZombie";
+            switch (yourChoice){
+                case "c1"; playetAtack(); break;
+                case "c2"; crossRoad(); break;
+            }
+            break;
+            case "playerAttack";
+            switch (yourChoice){
+                case "c1";
+                if(monsterHP < 1){
+                    win();
+                }
+                else{
+                    monsterAttack();
+                }
+                break;
+            }
+            break;
+            case "monsterAttack";
+            switch (yourChoice){
+                case "c1";
+                if(playerHp < 1){
+                    lose();
+                }
+                else{
+                    fightZombie();
+                }
+                break;
+            }
+            break;
+            case "winGame";
+            switch(yourChoice){
+                case "c1"; crossRoad();
+            }
+            break;
 
         }
     }
