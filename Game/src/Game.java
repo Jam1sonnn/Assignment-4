@@ -362,7 +362,7 @@ Font basicFont = new Font("Times New Roman", Font.PLAIN, 28); // Create basic fo
         public void endGame()[
             position = "endGame";
 
-            mainTextArea.setText("You have cleared out the cursed Themepark! You will forever be a hero!");
+            mainTextArea.setText("RAHHHH DUHHH (He runs away) /n You sucessfully cleared out the park!");
             choice1.setText("")
             choice2.setText("");
             choice3.setText("");
@@ -372,6 +372,7 @@ Font basicFont = new Font("Times New Roman", Font.PLAIN, 28); // Create basic fo
             choice3.setVisible(false);
             choice4.setVisible(false);
         ]
+    }
 
 
 
@@ -466,7 +467,7 @@ Font basicFont = new Font("Times New Roman", Font.PLAIN, 28); // Create basic fo
             switch (yourChoice){
                 case "c1";
                 if(monsterHP < 1){
-                    win();
+                    winGame();
                 }
                 else{
                     monsterAttack();
@@ -478,7 +479,7 @@ Font basicFont = new Font("Times New Roman", Font.PLAIN, 28); // Create basic fo
             switch (yourChoice){
                 case "c1";
                 if(playerHp < 1){
-                    lose();
+                    loseGame();
                 }
                 else{
                     fightZombie();
@@ -495,4 +496,5 @@ Font basicFont = new Font("Times New Roman", Font.PLAIN, 28); // Create basic fo
         }
     }
 
-}
+|}
+
